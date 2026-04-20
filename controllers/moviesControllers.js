@@ -17,7 +17,7 @@ function index(req, res) {
 
 
 function show(req, res) {
-    const sql = 'SELECT * FROM movies WHERE id = ?'
+    const sql = "SELECT * FROM movies JOIN reviews ON movies.id = reviews.movie_id WHERE movies.id = ?"
     connection.query(sql, [req.params.id], (err, results) => {
         if (err) throw err
         res.json(results)
