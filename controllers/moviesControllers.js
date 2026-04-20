@@ -8,6 +8,7 @@ function index(req, res) {
         if (err) throw err
         res.json(results)
     })
+    
 }
 
 /* to test http://localhost:3000/movies on postman */
