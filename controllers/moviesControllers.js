@@ -10,6 +10,8 @@ function index(req, res) {
     })
 }
 
+/* to test http://localhost:3000/movies on postman */
+
 
 /* show */
 
@@ -21,6 +23,8 @@ function show(req, res) {
         res.json(results)
     })
 }
+
+/* to test http://localhost:3000/movies/:id on postman */
 
 
 
