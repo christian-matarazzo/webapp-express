@@ -11,6 +11,16 @@ function index(req, res) {
 }
 
 
+/* show */
+
+
+function show(req, res) {
+    const sql = 'SELECT * FROM movies WHERE id = ?'
+    connection.query(sql, [req.params.id], (err, results) => {
+        if (err) throw err
+        res.json(results)
+    })
+}
 
 
 
@@ -26,6 +36,4 @@ function index(req, res) {
 
 
 
-
-
-module.exports = { index}
+module.exports = { index, show }
