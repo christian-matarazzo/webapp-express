@@ -18,11 +18,26 @@ function index(req, res) {
 
 
 function show(req, res) {
-    const sql = "SELECT * FROM movies JOIN reviews ON movies.id = reviews.movie_id WHERE movies.id = ?"
-    connection.query(sql, [req.params.id], (err, results) => {
-        if (err) throw err
-        res.json(results)
-    })
+    const id = req.params.id;
+
+    const sqlMovie = "SELECT * FROM movies WHERE id = ?";
+    
+    connection.query(sqlMovie, [id], (err, movieResults) => {
+        if (err) return res.status(500).json({ error: err.message });
+        if (movieResults.length === 0) return res.status(404).json({ error: "Film non trovato" });
+
+        const movie = movieResults[0];
+
+        const sqlReviews = "SELECT * FROM reviews WHERE movie_id = ?";
+        
+        connection.query(sqlReviews, [id], (err, reviewResults) => {
+            if (err) return res.status(500).json({ error: err.message });
+
+            movie.reviews = reviewResults;
+
+            res.json(movie);
+        });
+    });
 }
 
 /* to test http://localhost:3000/movies/:id on postman */
