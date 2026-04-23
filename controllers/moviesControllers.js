@@ -63,6 +63,17 @@ function store(req, res){
     })
 }
 
+/* destroy */
+
+function destroy(req,res){
+    const {id}= req.params
+    const sql = "DELETE FROM movies WHERE id = ?"
+
+    connection.query(sql, [id], (err, results) =>{
+        if (err) return res.status(500).json({error: "Errore durante l'eliminazione", message:err.message})
+        res.sendStatus(204)
+    })
+}
 
 
 
@@ -77,4 +88,5 @@ function store(req, res){
 
 
 
-module.exports = { index, show, store }
+
+module.exports = { index, show, store, destroy }
