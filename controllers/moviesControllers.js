@@ -39,10 +39,29 @@ function show(req, res) {
         });
     });
 }
-
 /* to test http://localhost:3000/movies/:id on postman */
 
 
+/* store,create */
+
+function store(req, res){
+    const { id } = req.params  /* recover id */
+    const { name, vote, text} = req.body /* recover body */
+
+    /* query creation */
+    const sql =
+    `INSERT INTO reviews (movie_id, name, vote, text) VALUES (?,?,?,?) `
+
+    /* query execution */
+    connection.query(sql, [id, name, vote, text], (err, results) => {
+        if (err) return res.status(500).json({error: 'Database query failed'})
+
+            res.status(201).json({
+                message: 'Recensione aggiunta con successo',
+                id: results.insertId
+            })
+    })
+}
 
 
 
@@ -56,4 +75,6 @@ function show(req, res) {
 
 
 
-module.exports = { index, show }
+
+
+module.exports = { index, show, store }
